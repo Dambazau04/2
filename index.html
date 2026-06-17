@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -461,8 +462,62 @@
             display: none;
         }
 
-        /* ── MOBILE RESPONSIVE ENHANCEMENTS ── */
+        /* ── SIDEBAR FIX: desktop & mobile ── */
+        #sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 256px;
+            height: 100%;
+            background: linear-gradient(180deg, #0D0950 0%, #150D7A 100%);
+            z-index: 40;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 4px 0 20px rgba(0, 0, 0, .25);
+            transform: translateX(-100%);
+            transition: transform .3s ease;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        #sidebar.sidebar-open {
+            transform: translateX(0) !important;
+        }
+
+        /* Desktop: sidebar always visible */
+        @media(min-width:769px) {
+            #sidebar {
+                transform: translateX(0) !important;
+            }
+            #menu-btn {
+                display: none !important;
+            }
+            /* Main content gets left margin to avoid overlap */
+            #dashboard-section main {
+                margin-left: 256px !important;
+                width: calc(100% - 256px) !important;
+                max-width: calc(100% - 256px) !important;
+            }
+        }
+
         @media(max-width:768px) {
+            #sidebar {
+                width: 280px !important;
+                transform: translateX(-100%);
+            }
+            #sidebar.sidebar-open {
+                transform: translateX(0) !important;
+            }
+            #dashboard-section main {
+                margin-left: 0 !important;
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+            #menu-btn {
+                display: block !important;
+            }
+            #user-info-wrap {
+                display: none !important;
+            }
             .print-page {
                 transform: scale(.46);
                 transform-origin: top center;
@@ -503,12 +558,6 @@
                 font-size: 11px;
                 padding: 8px 14px;
             }
-            #sidebar {
-                width: 280px !important;
-            }
-            #dashboard-section main {
-                padding: 0 !important;
-            }
             #main-content {
                 padding: 12px !important;
             }
@@ -540,7 +589,6 @@
             .print-header h2 {
                 font-size: 12px;
             }
-            /* Table horizontal scroll */
             .table-wrap {
                 overflow-x: auto;
                 -webkit-overflow-scrolling: touch;
@@ -548,14 +596,12 @@
             .table-wrap table {
                 min-width: 500px;
             }
-            /* Grid adjustments */
             .grid-2 {
                 grid-template-columns: 1fr !important;
             }
             .grid-3 {
                 grid-template-columns: 1fr 1fr !important;
             }
-            /* Flex wrap for buttons */
             .flex-wrap-mobile {
                 flex-direction: column;
                 align-items: stretch;
@@ -569,7 +615,6 @@
                 width: 100% !important;
                 justify-content: center;
             }
-            /* Timetable */
             .tt-table th,
             .tt-table td {
                 font-size: 8px !important;
@@ -579,17 +624,27 @@
                 font-size: 7px !important;
                 padding: 3px 2px !important;
             }
-            /* Marks entry table */
             .marks-table input[type="number"] {
                 width: 32px !important;
                 font-size: 9px !important;
                 padding: 2px !important;
             }
-            /* CBT exam list */
             #exam-list-grid .grid-2 {
                 grid-template-columns: 1fr !important;
             }
+            /* Danger zone on mobile */
+            .danger-zone {
+                padding: 14px !important;
+            }
+            .danger-zone h3 {
+                font-size: 16px !important;
+            }
+            .danger-zone .btn {
+                font-size: 11px !important;
+                padding: 10px !important;
+            }
         }
+
         @media(max-width:480px) {
             #main-content {
                 padding: 8px !important;
@@ -652,7 +707,6 @@
             .grid-3 {
                 grid-template-columns: 1fr !important;
             }
-            /* Make tables more compact */
             .data-table td,
             .data-table th {
                 padding: 4px 3px !important;
@@ -675,7 +729,6 @@
                 font-size: 5px !important;
                 padding: 2px 1px !important;
             }
-            /* Marks entry inputs */
             .marks-table input[type="number"] {
                 width: 24px !important;
                 font-size: 8px !important;
@@ -684,43 +737,29 @@
             .marks-table td {
                 padding: 2px !important;
             }
-            /* AI chat */
             .ai-msg {
                 font-size: 11px;
                 padding: 6px 10px;
             }
-            /* Modal */
             .modal-overlay>div {
                 padding: 12px;
             }
+            /* Danger zone on very small screens */
+            .danger-zone {
+                padding: 10px !important;
+            }
+            .danger-zone h3 {
+                font-size: 14px !important;
+            }
+            .danger-zone .btn {
+                font-size: 10px !important;
+                padding: 8px !important;
+            }
+            .danger-zone>div {
+                padding: 10px !important;
+            }
         }
 
-        /* sidebar mobile toggle */
-        #sidebar.sidebar-open {
-            transform: translateX(0) !important;
-        }
-        @media(min-width:769px) {
-            #sidebar {
-                transform: translateX(0) !important;
-            }
-            #menu-btn {
-                display: none !important;
-            }
-        }
-        @media(max-width:768px) {
-            #sidebar {
-                transform: translateX(-100%) !important;
-                transition: transform .3s ease !important;
-                width: 280px !important;
-                z-index: 50 !important;
-            }
-            #dashboard-section main {
-                margin-left: 0 !important;
-            }
-            #menu-btn {
-                display: block !important;
-            }
-        }
         .table-wrap {
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
@@ -903,11 +942,7 @@
             color: #9ca3af;
         }
 
-        /* ── SIDEBAR FIX ── */
-        #sidebar {
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
+        /* ── SIDEBAR SCROLL ── */
         #sidebar nav {
             flex: 1;
             overflow-y: auto;
@@ -965,21 +1000,6 @@
             }
         }
 
-        /* Desktop navigation: ensure all links visible */
-        #sidebar {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-        #sidebar nav {
-            flex: 1 1 auto;
-            overflow-y: auto;
-            min-height: 0;
-        }
-        #sidebar>div:last-child {
-            flex-shrink: 0;
-        }
-
         /* Header title ellipsis */
         #header-title {
             white-space: nowrap;
@@ -994,7 +1014,7 @@
             }
         }
 
-        /* Fix for marks table on mobile */
+        /* Marks table responsive */
         .marks-table {
             min-width: 600px;
         }
@@ -1034,6 +1054,54 @@
                 width: 18px !important;
                 height: 18px !important;
                 font-size: 9px !important;
+            }
+        }
+
+        /* ── MAIN CONTENT WRAPPER ── */
+        #dashboard-section {
+            display: flex;
+            min-height: 100vh;
+        }
+        #dashboard-section main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background: #F0F2FF;
+            transition: margin-left .3s ease, width .3s ease;
+        }
+        #main-content {
+            padding: 20px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        /* ── FIX: ensure main content doesn't overlap sidebar ── */
+        @media(min-width:769px) {
+            #dashboard-section main {
+                margin-left: 256px !important;
+                width: calc(100% - 256px) !important;
+                max-width: calc(100% - 256px) !important;
+            }
+        }
+
+        /* ── MOBILE: sidebar overlay fix ── */
+        @media(max-width:768px) {
+            #sidebar {
+                transform: translateX(-100%);
+                transition: transform .3s ease;
+            }
+            #sidebar.sidebar-open {
+                transform: translateX(0) !important;
+                box-shadow: 4px 0 30px rgba(0, 0, 0, .5);
+            }
+            /* Add overlay background when sidebar is open */
+            #sidebar.sidebar-open::after {
+                content: '';
+                position: fixed;
+                inset: 0;
+                background: rgba(0, 0, 0, .3);
+                z-index: -1;
             }
         }
     </style>
@@ -1132,7 +1200,7 @@
     <!-- ══════════════ MAIN DASHBOARD ══════════════ -->
     <div id="dashboard-section" style="display:none;min-height:100vh;background:#F0F2FF;">
         <!-- Sidebar -->
-        <aside id="sidebar" style="background:linear-gradient(180deg,#0D0950 0%,#150D7A 100%);width:256px;position:fixed;height:100%;z-index:40;display:flex;flex-direction:column;box-shadow:4px 0 20px rgba(0,0,0,.25);transform:translateX(-100%);transition:transform .3s;" class="md:translate-x-0">
+        <aside id="sidebar">
             <div style="padding:16px;text-align:center;border-bottom:1px solid rgba(255,255,255,.1);background:rgba(0,0,0,.3);flex-shrink:0;">
                 <div class="logo-circle" style="width:60px;height:60px;margin:0 auto 8px;border:2px solid var(--sky);">
                     <img src="https://i.postimg.cc/D0Bj0rxK/Chat-GPT-Image-Apr-16-2026-12-24-02-AM-removebg-preview.png" style="width:52px;height:52px;object-fit:contain;border-radius:50%;">
@@ -1148,7 +1216,7 @@
         </aside>
 
         <!-- Main Area -->
-        <main style="margin-left:0;flex:1;display:flex;flex-direction:column;min-height:100vh;" class="md:ml-64">
+        <main>
             <!-- Top Header -->
             <header style="background:#fff;box-shadow:0 2px 8px rgba(21,13,122,.08);padding:12px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:30;border-bottom:1px solid var(--lgray);flex-shrink:0;">
                 <div style="display:flex;align-items:center;gap:12px;min-width:0;">
@@ -1395,19 +1463,20 @@
 
         window.toggleSidebar = () => {
             const s = document.getElementById('sidebar');
-            if (s.style.transform === 'translateX(0px)') {
-                s.style.transform = 'translateX(-100%)';
+            if (s.classList.contains('sidebar-open')) {
                 s.classList.remove('sidebar-open');
+                s.style.transform = 'translateX(-100%)';
             } else {
-                s.style.transform = 'translateX(0px)';
                 s.classList.add('sidebar-open');
+                s.style.transform = 'translateX(0)';
             }
         };
 
         const hideSidebar = () => {
             if (window.innerWidth < 769) {
-                document.getElementById('sidebar').style.transform = 'translateX(-100%)';
-                document.getElementById('sidebar').classList.remove('sidebar-open');
+                const s = document.getElementById('sidebar');
+                s.classList.remove('sidebar-open');
+                s.style.transform = 'translateX(-100%)';
             }
         };
         window.hideSidebar = hideSidebar;
@@ -1544,8 +1613,9 @@
             if (window.innerWidth < 769) document.getElementById('menu-btn').style.display = 'block';
             else document.getElementById('menu-btn').style.display = 'none';
             if (window.innerWidth >= 769) {
-                document.getElementById('sidebar').style.transform = 'translateX(0)';
-                document.getElementById('sidebar').classList.remove('sidebar-open');
+                const s = document.getElementById('sidebar');
+                s.classList.remove('sidebar-open');
+                s.style.transform = 'translateX(0)';
             }
             renderNav();
             loadPage('home');
@@ -4181,30 +4251,46 @@
         };
 
         // ══════════════════════════════════════════════
-        // RESPONSIVE SIDEBAR
+        // RESPONSIVE SIDEBAR — ENSURE TOGGLE WORKS
         // ══════════════════════════════════════════════
         window.addEventListener('resize', () => {
+            const s = document.getElementById('sidebar');
+            const btn = document.getElementById('menu-btn');
             if (window.innerWidth >= 769) {
-                document.getElementById('sidebar').style.transform = 'translateX(0)';
-                document.getElementById('sidebar').classList.remove('sidebar-open');
-                document.getElementById('menu-btn').style.display = 'none';
+                s.style.transform = 'translateX(0)';
+                s.classList.remove('sidebar-open');
+                if (btn) btn.style.display = 'none';
+                document.getElementById('dashboard-section').querySelector('main').style.marginLeft = '256px';
+                document.getElementById('dashboard-section').querySelector('main').style.width = 'calc(100% - 256px)';
+                document.getElementById('dashboard-section').querySelector('main').style.maxWidth = 'calc(100% - 256px)';
             } else {
-                if (!document.getElementById('sidebar').classList.contains('sidebar-open')) {
-                    document.getElementById('sidebar').style.transform = 'translateX(-100%)';
+                if (!s.classList.contains('sidebar-open')) {
+                    s.style.transform = 'translateX(-100%)';
                 }
-                document.getElementById('menu-btn').style.display = 'block';
+                if (btn) btn.style.display = 'block';
+                document.getElementById('dashboard-section').querySelector('main').style.marginLeft = '0';
+                document.getElementById('dashboard-section').querySelector('main').style.width = '100%';
+                document.getElementById('dashboard-section').querySelector('main').style.maxWidth = '100%';
             }
         });
 
-        if (window.innerWidth >= 769) {
-            document.getElementById('sidebar').style.transform = 'translateX(0)';
-            document.getElementById('menu-btn').style.display = 'none';
-        } else {
-            document.getElementById('sidebar').style.transform = 'translateX(-100%)';
-            document.getElementById('menu-btn').style.display = 'block';
-        }
+        // Initial state
+        window.addEventListener('load', () => {
+            const s = document.getElementById('sidebar');
+            const btn = document.getElementById('menu-btn');
+            if (window.innerWidth >= 769) {
+                s.style.transform = 'translateX(0)';
+                s.classList.remove('sidebar-open');
+                if (btn) btn.style.display = 'none';
+            } else {
+                s.style.transform = 'translateX(-100%)';
+                s.classList.remove('sidebar-open');
+                if (btn) btn.style.display = 'block';
+            }
+        });
 
-        console.log('🚀 TACC Portal fully responsive with all features!');
+        console.log('🚀 TACC Portal — Desktop & Mobile fully responsive!');
+        console.log('📱 All pages: Students, Academic, CBT, Attendance, Report Cards, Recycle, Danger are mobile-optimized.');
     </script>
 </body>
 </html>
